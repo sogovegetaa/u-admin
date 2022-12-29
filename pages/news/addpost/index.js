@@ -6,7 +6,7 @@ import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import Switcher from '../../components/Switcher'
 import Footer from "../../components/Footer";
-const addpost = () => {
+const Addpost = () => {
   const { quill, quillRef } = useQuill();
   const [selectedFileDocument, setSelectedFileDocument] = useState(null);
   const url = "https://arioapi.pythonanywhere.com/api/posts/";
@@ -192,4 +192,4 @@ const addpost = () => {
   );
 };
 
-export default addpost;
+export default Addpost;
