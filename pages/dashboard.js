@@ -25,10 +25,11 @@ function Dashboard() {
   };
 
   return (
-    <div className="bg-[#FAFAFA] dark:bg-[#111111]">
-      {/* {JSON.stringify(user)} */}
+    
+    <>
+      
       <Header />
-      <div className="container mx-auto">
+      <div className="container mx-auto h-[85vh]">
         <div className="grid grid-cols-2 gap-10">
           <div className="bg-white dark:bg-black border border-[#ededed] dark:border-[#333] mt-6  hover:dark:border-white duration-75 rounded-lg">
             <div className="border-b border-[#ededed] dark:border-[#333] flex justify-between items-center">
@@ -63,9 +64,13 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      
       <Footer />
       <Switcher />
-    </div>
+    </>
+    
+    
+    
   );
 }
 

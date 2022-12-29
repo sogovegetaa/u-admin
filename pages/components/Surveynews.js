@@ -24,7 +24,7 @@ const Survaynews = () => {
         <div>Исследования:</div>
         <Link href="/survey"><div className="cursor-pointer hover:bg-[#eaeaea] dark:hover:bg-[#333] px-2 py-1 rounded-md duration-100">{isLoading ? (<div>Загрузка...</div>): post.length}</div></Link>
       </div>
-      <div className="h-[1px] bg-[#ebebeb] dark:bg-[#333] mx-5"></div>
+      
     </>
   );
 };
