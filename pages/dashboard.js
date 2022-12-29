@@ -25,7 +25,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="bg-[#FAFAFA] dark:bg-[#111111] h-[100vh]">
+    <div className="bg-[#FAFAFA] dark:bg-[#111111]">
       {/* {JSON.stringify(user)} */}
       <Header />
       <div className="container mx-auto">
