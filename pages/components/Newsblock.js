@@ -25,13 +25,13 @@ const Newsblock = ({ item, data }) => {
       <div className="relative p-4" ref={menuRef}>
         <div className="grid grid-cols-12 gap-10">
           <div className="col-span-2">
-          <Image
-              src={item?.img ? item?.img : null}
+          {item.img && <Image
+              src={item?.img}
               width={170}
               height={113}
               className="bg-light-500 pixer2 w-full"
               alt=""
-            />
+            />}
           </div>
           <div className="col-span-7">
             <div className="text-xl text-black dark:text-white">
