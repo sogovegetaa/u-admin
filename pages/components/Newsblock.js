@@ -19,7 +19,7 @@ const Newsblock = ({ item, data }) => {
   });
   return (
     <div
-      key={item.id}
+      key={item?.id}
       className="bg-white dark:bg-black border border-[#ededed] dark:border-[#333] mt-6 w-11/12 hover:dark:border-white duration-75 rounded-lg"
     >
       <div className="relative p-4" ref={menuRef}>
@@ -35,12 +35,12 @@ const Newsblock = ({ item, data }) => {
           </div>
           <div className="col-span-7">
             <div className="text-xl text-black dark:text-white">
-              {item.title}
+              {item?.title}
             </div>
-            <div className="text-[#666] font-md pt-2">{item.date}</div>
+            <div className="text-[#666] font-md pt-2">{item?.date}</div>
           </div>
           <div className="flex items-center justify-end pr-10 col-span-3">
-            <Link href={`/news/post/${item.id}`}>
+            <Link href={`/news/post/${item?.id}`}>
               <a target="_blank" className="text-black underline dark:text-[#666] hover:dark:text-white duration-75 font-medium ">
                 Предосмотр
               </a>
@@ -72,7 +72,7 @@ const Newsblock = ({ item, data }) => {
             open ? "qctive" : "inqctive"
           }`}
         >
-          <Link href={`https://ario.vercel.app/news/post/${item.id}`}>
+          <Link href={`https://ario.vercel.app/news/post/${item?.id}`}>
             <a target="_blank" className="px-2 py-1 text-sm cursor-pointer hover:bg-[#333] rounded-md duration-100">
               Перейти
             </a>
