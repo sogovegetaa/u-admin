@@ -25,7 +25,7 @@ const Newsblock = ({ item, data }) => {
       <div className="relative p-4" ref={menuRef}>
         <div className="grid grid-cols-12 gap-10">
           <div className="col-span-2">
-          {item.img && <Image
+          {item?.img && <Image
               src={item?.img}
               width={170}
               height={113}
