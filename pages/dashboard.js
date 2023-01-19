@@ -75,9 +75,48 @@ export default function Dashboard(data) {
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = data.data.slice(firstPostIndex, lastPostIndex);
+  const [search, setSearch] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const [sort, setSort] = useState(true);
   return (
-    <>
+    <div className="mb-12">
       <Header />
+      <div className="container mx-auto">
+        <p
+          onClick={() => {
+            setSort(!sort);
+          }}
+          className={
+            sort == false
+              ? "fixed p-2 duration-200 bg-blue-100 rounded-lg shadow-xl cursor-pointer bottom-5 right-2 hover:bg-blue-500"
+              : "fixed p-2 duration-200 bg-red-300 rounded-lg shadow-xl cursor-pointer bottom-5 right-2 hover:bg-red-500"
+          }
+        >
+          {sort == false ? "V" : "X"}
+        </p>
+        {sort && (
+          <div className="fixed bottom-5 right-10">
+            <input
+              type="text"
+              id="searchName"
+              onChange={(e) => setSearchName(e.target.value)}
+              placeholder="Пойск по имени"
+              className="p-2 mr-5 bg-blue-100 rounded-md shadow-lg"
+            />
+            <select
+              id="search"
+              onChange={(e) => setSearch(e.target.value)}
+              className="p-2 bg-blue-100 rounded-md shadow-lg"
+            >
+              <option value="man">Мужчина</option>
+              <option value="woman">Женщина</option>
+              <option value="" selected>
+                Выберите пол
+              </option>
+            </select>
+          </div>
+        )}
+      </div>
       <div className="px-2">
         <div className="px-4 sm:px-8">
           <div className="pt-3">
@@ -110,87 +149,98 @@ export default function Dashboard(data) {
                     </tr>
                   </thead>
                   <tbody>
-                    {currentPosts.map((row) => {
-                      return (
-                        <tr key={row.id}>
-                          <td className="px-4 py-4 text-sm bg-white border-b border-gray-200">
-                            <Link href={`/req/${row.id}`}>
-                              <a className="p-1 duration-200 bg-blue-100 rounded-md hover:bg-blue-300">
-                                {(row.fio == "") | (row.fio == null)
-                                  ? "Не указан"
-                                  : `${row.fio}`}
-                              </a>
-                            </Link>
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            {row.region}
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            {row.iin}
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            {row.report_date}
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            {row.report_time == "default"
-                              ? "-"
-                              : `${row.report_time}`}
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            {row.email}
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                              <span
-                                aria-hidden
-                                className="absolute inset-0 bg-green-200 rounded-full opacity-50"
-                              ></span>
-                              <span className="relative">Принять</span>
-                            </span>
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            {row.tests}
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            {row.number}
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            <Link href={`${row.udostoverenie}`}>
-                              <a
-                                target="_blank"
-                                className={
-                                  row.udostoverenie == null
-                                    ? "bg-red-200 text-center px-2 rounded-xl py-1 cursor-not-allowed"
-                                    : "bg-green-200 px-2 rounded-xl py-1 cursor-pointer hover:bg-green-500 duration-200"
-                                }
-                              >
-                                {row.udostoverenie == null ? "-" : "Просмотр"}
-                              </a>
-                            </Link>
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            <Link href={`${row.payment_check}`}>
-                              <a
-                                target="_blank"
-                                className={
-                                  row.payment_check == null
-                                    ? "bg-red-200 text-center px-2 rounded-xl py-1 cursor-not-allowed"
-                                    : "bg-green-200 px-2 rounded-xl py-1 cursor-pointer hover:bg-green-500 duration-200"
-                                }
-                              >
-                                {row.payment_check == null ? "-" : "Просмотр"}
-                              </a>
-                            </Link>
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            {row.sex}
-                          </td>
-                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                            {row.country}
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {data.data
+                      .filter((item) => {
+                        return search.toLowerCase() == ""
+                          ? item
+                          : item.sex.toLowerCase().includes(search);
+                      })
+                      .filter((item) => {
+                        return searchName.toLowerCase() == ""
+                          ? item
+                          : item.sex.toLowerCase().includes(searchName);
+                      })
+                      .map((row) => {
+                        return (
+                          <tr key={row.id}>
+                            <td className="px-4 py-4 text-sm font-medium bg-white border-b border-gray-200">
+                              <Link href={`/req/${row.id}`}>
+                                <a className="p-1 duration-200 bg-blue-100 rounded-md hover:bg-blue-300">
+                                  {(row.fio == "") | (row.fio == null)
+                                    ? "Не указан"
+                                    : `${row.fio}`}
+                                </a>
+                              </Link>
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              {row.region}
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              {row.iin}
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              {row.report_date}
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              {row.report_time == "default"
+                                ? "-"
+                                : `${row.report_time}`}
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              {row.email}
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
+                                <span
+                                  aria-hidden
+                                  className="absolute inset-0 bg-green-200 rounded-full opacity-50"
+                                ></span>
+                                <span className="relative">Принять</span>
+                              </span>
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              {row.tests == null ? "-" : `${row.tests}`}
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              {row.number}
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              <Link href={`${row.udostoverenie}`}>
+                                <a
+                                  target="_blank"
+                                  className={
+                                    row.udostoverenie == null
+                                      ? "bg-red-200 text-center px-2 text-red-900 font-extrabold rounded-xl py-1 cursor-not-allowed flex justify-center"
+                                      : "font-medium text-green-900 bg-green-200 px-2 rounded-xl py-1 cursor-pointer hover:bg-green-500 duration-200"
+                                  }
+                                >
+                                  {row.udostoverenie == null ? "-" : "Просмотр"}
+                                </a>
+                              </Link>
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              <Link href={`${row.payment_check}`}>
+                                <a
+                                  target="_blank"
+                                  className={
+                                    row.payment_check == null
+                                      ? "bg-red-200 text-center px-2 text-red-900 font-extrabold rounded-xl py-1 cursor-not-allowed flex justify-center"
+                                      : "font-medium text-green-900 bg-green-200 px-2 rounded-xl py-1 cursor-pointer hover:bg-green-500 duration-200"
+                                  }
+                                >
+                                  {row.payment_check == null ? "-" : "Просмотр"}
+                                </a>
+                              </Link>
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              {row.sex}
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              {row.country}
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>
@@ -206,7 +256,7 @@ export default function Dashboard(data) {
           currentPage={currentPage}
         />
       </div>
-    </>
+    </div>
   );
 }
 export async function getServerSideProps(context) {

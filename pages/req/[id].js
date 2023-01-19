@@ -151,24 +151,22 @@ function req({ post }) {
           </div>
         </div>
       </div>
-      <div className="container mx-auto">
-        <div className="grid grid-cols-2">
-        <div>
-        <Link href="/dashboard">
-          <a className="p-3 duration-200 bg-blue-300 hover:bg-blue-500 rounded-xl">Назад</a>
-        </Link>
-        </div>
-        <div>
-        <ReactHtmlTableToExcel
+      <div className="absolute bottom-5 right-10">
+      <ReactHtmlTableToExcel
           id="test-table-xls-button"
-          className="p-2 duration-200 bg-blue-300 hover:bg-blue-500 rounded-xl "
+          className="px-6 py-3 mr-12 duration-200 bg-blue-300 hover:bg-blue-500 rounded-xl"
           table="table-to-xls"
           filename="tablexls"
           sheet="tablexls"
           buttonText="Скачать Excel"
         />
-        </div>
-        </div>
+        <Link href="/dashboard">
+          <a className="px-6 py-3 duration-200 bg-blue-300 hover:bg-blue-500 rounded-xl">
+            Назад
+          </a>
+        </Link>
+
+        
       </div>
     </>
   );
