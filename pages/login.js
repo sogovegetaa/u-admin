@@ -1,10 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Switcher from "./components/Switcher";
 
-function Home() {
-  
+export default function Home() {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -24,8 +22,8 @@ function Home() {
   return (
     <div className="relative flex flex-col justify-center min-h-screen bg-[#fafafa] dark:bg-black">
       <div className="w-full p-6 m-auto bg-white dark:bg-[#111] rounded-md border border-[#ededed] dark:border-[#333] lg:max-w-xl">
-        <h1 className="text-3xl font-semibold text-center text-black dark:text-white  uppercase">
-          Авторизация на Ario Admin
+        <h1 className="text-3xl font-semibold text-center text-black uppercase dark:text-white">
+          Admin Ustudy
         </h1>
         <form className="mt-6" onSubmit={handleSubmit}>
           <div className="mb-2">
@@ -66,15 +64,12 @@ function Home() {
           </div>
 
           <div className="mt-6">
-            <button className="w-full text-white bg-black dark:text-black dark:bg-white py-1.5 px-2 rounded-md border border-white dark:border-black hover:border-black hover:dark:border-white hover:bg-white hover:dark:bg-black hover:text-black hover:dark:text-white duration-150">
+            <button className="w-full text-black bg-blue-300 py-1.5 px-2 rounded-md border duration-200 hover:bg-blue-500">
               Войти
             </button>
           </div>
         </form>
       </div>
-      <Switcher />
     </div>
   );
 }
-
-export default Home;

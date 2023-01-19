@@ -1,77 +1,219 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { data } from "autoprefixer";
 import Header from "./components/Header";
-import Switcher from "./components/Switcher";
 import Link from "next/link";
-import Allnews from "./components/Allnews";
-import Projectnews from "./components/Projectnews";
-import Eventsnews from "./components/Eventsnews";
-import Analyticnews from "./components/Analyticnews";
-import Survaynews from "./components/Surveynews";
-import Footer from "./components/Footer";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import Pagination from "./components/Pagination";
 
-function Dashboard() {
+export default function Dashboard(data) {
   const [user, setUser] = useState({
     email: "",
     username: "",
   });
-  const router = useRouter();
 
   const getProfile = async () => {
     const profile = await axios.get("/api/profile");
     setUser(profile.data);
   };
-
+  const col = [
+    {
+      id: 1,
+      title: "ФИО",
+    },
+    {
+      id: 12,
+      title: "РЕГИОН",
+    },
+    {
+      id: 13,
+      title: "ИИН",
+    },
+    {
+      id: 14,
+      title: "ДАТА ЗАЯВКИ	",
+    },
+    {
+      id: 15,
+      title: "ВРЕМЯ СДАЧИ	",
+    },
+    {
+      id: 16,
+      title: "ПОЧТА",
+    },
+    {
+      id: 17,
+      title: "ОФЕРТА",
+    },
+    {
+      id: 18,
+      title: "ТЕСТ",
+    },
+    {
+      id: 19,
+      title: "ТЕЛ.:",
+    },
+    {
+      id: 20,
+      title: "УДОСТ.",
+    },
+    {
+      id: 23,
+      title: "ЧЕК ОПЛ.",
+    },
+    {
+      id: 21,
+      title: "ПОЛ",
+    },
+    {
+      id: 22,
+      title: "ГРАЖДАНСТВО",
+    },
+  ];
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(8);
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = data.data.slice(firstPostIndex, lastPostIndex);
   return (
-    
     <>
-      
       <Header />
-      <div className="container mx-auto h-[85vh]">
-        <div className="grid grid-cols-2 gap-10">
-          <div className="bg-white dark:bg-black border border-[#ededed] dark:border-[#333] mt-6  hover:dark:border-white duration-75 rounded-lg">
-            <div className="border-b border-[#ededed] dark:border-[#333] flex justify-between items-center">
-              <div className="text-3xl text-black dark:text-white p-5">
-                Новости
+      <div className="px-2">
+        <div className="px-4 sm:px-8">
+          <div className="pt-3">
+            <div className="flex justify-between">
+              <h2 className="text-2xl font-semibold leading-tight">
+                Найдено 10 записей.
+              </h2>
+              <ReactHTMLTableToExcel
+                id="test-table-xls-button"
+                className="p-2 duration-200 bg-blue-200 hover:bg-blue-500 rounded-xl"
+                table="table-to-xls"
+                filename="tablexls"
+                sheet="tablexls"
+                buttonText="Скачать все заявки Excel"
+              />
+            </div>
+            <div className="px-4 pt-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
+              <div className="inline-block min-w-full overflow-hidden rounded-lg shadow-md">
+                <table className="min-w-full leading-normal" id="table-to-xls">
+                  <thead>
+                    <tr>
+                      {col.map((col) => (
+                        <th
+                          key={col.id}
+                          className="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase bg-gray-100 border-b-2 border-gray-200"
+                        >
+                          {col.title}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentPosts.map((row) => {
+                      return (
+                        <tr key={row.id}>
+                          <td className="px-4 py-4 text-sm bg-white border-b border-gray-200">
+                            <Link href={`/req/${row.id}`}>
+                              <a className="p-1 duration-200 bg-blue-100 rounded-md hover:bg-blue-300">
+                                {(row.fio == "") | (row.fio == null)
+                                  ? "Не указан"
+                                  : `${row.fio}`}
+                              </a>
+                            </Link>
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            {row.region}
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            {row.iin}
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            {row.report_date}
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            {row.report_time == "default"
+                              ? "-"
+                              : `${row.report_time}`}
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            {row.email}
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
+                              <span
+                                aria-hidden
+                                className="absolute inset-0 bg-green-200 rounded-full opacity-50"
+                              ></span>
+                              <span className="relative">Принять</span>
+                            </span>
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            {row.tests}
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            {row.number}
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <Link href={`${row.udostoverenie}`}>
+                              <a
+                                target="_blank"
+                                className={
+                                  row.udostoverenie == null
+                                    ? "bg-red-200 text-center px-2 rounded-xl py-1 cursor-not-allowed"
+                                    : "bg-green-200 px-2 rounded-xl py-1 cursor-pointer hover:bg-green-500 duration-200"
+                                }
+                              >
+                                {row.udostoverenie == null ? "-" : "Просмотр"}
+                              </a>
+                            </Link>
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <Link href={`${row.payment_check}`}>
+                              <a
+                                target="_blank"
+                                className={
+                                  row.payment_check == null
+                                    ? "bg-red-200 text-center px-2 rounded-xl py-1 cursor-not-allowed"
+                                    : "bg-green-200 px-2 rounded-xl py-1 cursor-pointer hover:bg-green-500 duration-200"
+                                }
+                              >
+                                {row.payment_check == null ? "-" : "Просмотр"}
+                              </a>
+                            </Link>
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            {row.sex}
+                          </td>
+                          <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            {row.country}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
-              <Link href="/news"><a target="_blank" className="text-xl text-[#666] underline hover:text-black dark:hover:text-white cursor-pointer duration-150  p-5">
-                Перейти
-              </a></Link>
-            </div>
-            <div className="px-12 py-5 text-md text-[#666] dark:text-[#555] font-medium flex justify-between ">
-              <div>Категория</div>
-              <div>Количество</div>
-            </div>
-            <div className="h-[1px] bg-[#ebebeb] dark:bg-[#333] mx-5"></div>
-            <Allnews />
-            <Projectnews />
-            <Eventsnews />
-            <Analyticnews />
-            <Survaynews />
-          </div>
-          <div className="bg-white dark:bg-black border border-[#ededed] dark:border-[#333] mt-6  hover:dark:border-white duration-75 rounded-lg">
-            <div className="border-b border-[#ededed] dark:border-[#333]">
-              <div className="text-3xl text-black dark:text-white p-5">
-                Статьи
-              </div>
-            </div>
-            <div className="px-12 py-5 text-md text-black dark:text-white font-medium ">
-              <div>Количество:</div>
-              <div>12</div>
             </div>
           </div>
         </div>
       </div>
-      
-      <Footer />
-      <Switcher />
+      <div className="flex justify-center">
+        <Pagination
+          totalPosts={data.data.length}
+          postsPerPage={postsPerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
+      </div>
     </>
-    
-    
-    
   );
 }
-
-export default Dashboard;
+export async function getServerSideProps(context) {
+  const res = await fetch("https://arioapi.pythonanywhere.com/u-api/request/");
+  const data = await res.json();
+  console.log(context);
+  return {
+    props: { data },
+  };
+}

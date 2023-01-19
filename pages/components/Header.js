@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
-import { useRouter } from "next/router";
 import Link from "next/link";
-const Header = () => {
+import { useRouter } from "next/router";
+import React from "react";
+
+function Header() {
   const router = useRouter();
   const logout = async () => {
     try {
@@ -12,72 +12,20 @@ const Header = () => {
     }
     router.push("/login");
   };
-  const [theme, setTheme] = useState(null);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
-  const handleThemeSwitch = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
   return (
-    <header className="bg-white dark:bg-black border-b border-[#ededed] dark:border-[#333]">
-      <div className="container flex flex-col flex-wrap items-center p-5 mx-auto md:flex-row">
-        <a className="flex items-center mb-4 font-medium text-gray-900 title-font md:mb-0">
-         
-          <Link href="/dashboard">
-            <span className="ml-3 text-xl text-black cursor-pointer dark:text-white">
-              Ario Admin
-            </span>
-          </Link>
-        </a>
-        <nav className="flex flex-wrap items-center justify-center text-base md:ml-auto md:mr-auto">
-        <Link href="/dashboard">
-            <p className="mr-5 text-black font-bold dark:text-white cursor-pointer hover:bg-[#eaeaea] dark:hover:bg-[#333] p-1 rounded-md duration-100">
-              Главная
-            </p>
-          </Link>
-          <Link href="/news">
-            <p className="mr-5 text-black font-bold dark:text-white cursor-pointer hover:bg-[#eaeaea] dark:hover:bg-[#333] p-1 rounded-md duration-100">
-              Новости
-            </p>
-          </Link>
-        </nav>
-
-        <button
-          onClick={() => logout()}
-          className="flex text-white bg-black dark:text-black dark:bg-white py-1.5 px-2 items-center rounded-md border border-white dark:border-black hover:border-black hover:dark:border-white hover:bg-white hover:dark:bg-black hover:text-black hover:dark:text-white duration-150"
-        >
-          Выйти
-          <svg
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="w-4 h-4 ml-1"
-            viewBox="0 0 24 24"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-        </button>
+    <div className="bg-gray-200 ">
+      <div className="container mx-auto ">
+        <div className="flex items-center justify-between h-12 ">
+          <div className="px-8"><Link href="/"><a>Админ панель</a></Link></div>
+          <div>
+          <button className="px-8 py-1 font-medium text-white duration-200 bg-red-500 rounded-lg hover:bg-black" onClick={() => logout()}>
+            Выйти
+          </button>
+          </div>
+        </div>
       </div>
-    </header>
+    </div>
   );
-};
+}
 
 export default Header;
