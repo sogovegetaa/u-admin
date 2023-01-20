@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import Header from "./components/Header";
 import Link from "next/link";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
-
 import AddPagaination from "./components/AddPagaination";
 export default function International(data) {
   const [user, setUser] = useState({
@@ -110,18 +109,31 @@ export default function International(data) {
               onChange={(e) => setSearch(e.target.value)}
               className="p-2 bg-blue-100 rounded-md shadow-lg"
             >
-              <option value="Cert">Cert</option>
-              <option value="Toeflitp">Toeflitp</option>
-              <option value="Тесты TOEFL Primary">Тесты TOEFL Primary</option>
-              <option value="Тесты TOEFL Junior Standard">Тесты TOEFL Junior Standard</option>
-              <option value="Обучающий материал TOEFL Primary ELC">Обучающий материал TOEFL Primary ELC</option>
-              <option value="Обучающий материал TOEFL Junior ELC">Обучающий материал TOEFL Junior ELC</option>
-              <option value="Ielts">Ielts</option>
-              <option value="Тест на знание французского языка TFI">Тест на знание французского языка TFI</option>
-              <option value="Тест Toeic Listening and Reading Test">Тест Toeic Listening and Reading Test</option>
-              <option value="TOEIC Speaking and Writing Test">TOEIC Speaking and Writing Test</option>
-              <option value="Linguaskill">Linguaskill</option>
-              <option value="Tds">Tds</option>
+              <option value="" selected>Все</option>
+              <option value="cert">Сert</option>
+              <option value="toeflitp">Toeflitp</option>
+              <option value="тесты toefl primary">тесты Toefl Primary</option>
+              <option value="тесты toefl junior standard">
+                Тесты Toefl Junior Standard
+              </option>
+              <option value="обучающий материал toefl junior elc">
+                Обучающий материал Toefl Junior Elc
+              </option>
+              <option value="обучающий материал toefl junior elc">
+                Обучающий материал Toefl Junior Elc
+              </option>
+              <option value="ielts">Ielts</option>
+              <option value="тест на знание французского языка tfi">
+                Тест на знание французского языка Tfi
+              </option>
+              <option value="тест toeic listening and reading test">
+                Тест Toeic Listening and Reading Test
+              </option>
+              <option value="toeic speaking and writing test">
+              Toeic Speaking and Writing Test
+              </option>
+              <option value="linguaskill">Linguaskill</option>
+              <option value="tds">Tds</option>
             </select>
           </div>
         )}
@@ -264,7 +276,7 @@ export default function International(data) {
   );
 }
 export async function getServerSideProps(context) {
-  const res = await fetch("https://arioapi.pythonanywhere.com/u-api/request/");
+  const res = await fetch("https://arioapi.pythonanywhere.com/u-api/international/");
   const data = await res.json();
   console.log(context);
   return {

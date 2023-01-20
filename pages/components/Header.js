@@ -18,7 +18,7 @@ function Header() {
       <div className="container mx-auto ">
         <div className="flex items-center justify-between h-12 ">
           <div className="px-8">
-            <Link href="/">
+            <Link href="/dashboard">
               <a className="px-8 py-1 font-medium duration-200 bg-blue-200 rounded-lg hover:bg-blue-500">
                 Главная
               </a>

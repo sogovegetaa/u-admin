@@ -15,7 +15,7 @@ export default function Home() {
     console.log(res);
 
     if (res.status === 200) {
-      router.push("/international");
+      router.push("/dashboard");
     }
   };
 
