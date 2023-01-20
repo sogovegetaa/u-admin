@@ -110,11 +110,18 @@ export default function International(data) {
               onChange={(e) => setSearch(e.target.value)}
               className="p-2 bg-blue-100 rounded-md shadow-lg"
             >
-              <option value="linguaskill">linguaskill</option>
-              <option value="cert">cert</option>
-              <option value="" selected>
-                Выберить тест
-              </option>
+              <option value="Cert">Cert</option>
+              <option value="Toeflitp">Toeflitp</option>
+              <option value="Тесты TOEFL Primary">Тесты TOEFL Primary</option>
+              <option value="Тесты TOEFL Junior Standard">Тесты TOEFL Junior Standard</option>
+              <option value="Обучающий материал TOEFL Primary ELC">Обучающий материал TOEFL Primary ELC</option>
+              <option value="Обучающий материал TOEFL Junior ELC">Обучающий материал TOEFL Junior ELC</option>
+              <option value="Ielts">Ielts</option>
+              <option value="Тест на знание французского языка TFI">Тест на знание французского языка TFI</option>
+              <option value="Тест Toeic Listening and Reading Test">Тест Toeic Listening and Reading Test</option>
+              <option value="TOEIC Speaking and Writing Test">TOEIC Speaking and Writing Test</option>
+              <option value="Linguaskill">Linguaskill</option>
+              <option value="Tds">Tds</option>
             </select>
           </div>
         )}
