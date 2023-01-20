@@ -12,11 +12,12 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await axios.post("/api/auth/login", credentials);
+
     console.log(res);
 
     if (res.status === 200) {
-      router.push("/dashboard");
-    }
+      router.push("/dashboard") 
+    } 
   };
 
   return (

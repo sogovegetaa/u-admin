@@ -4,7 +4,7 @@ import { serialize } from "cookie";
 export default function loginHandler(req, res) {
   const { email, password } = req.body;
 
-  if (email === "admin" && password === "admin") {
+  if (email === "ustudy" && password === "sotola36") {
     // expire in 30 days
     const token = sign(
       {

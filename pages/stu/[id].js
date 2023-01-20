@@ -3,7 +3,7 @@ import React from "react";
 import ReactHtmlTableToExcel from "react-html-table-to-excel";
 import Header from "../components/Header";
 
-function req({ post }) {
+function stu({ post }) {
   const col = [
     {
       id: 1,
@@ -63,7 +63,7 @@ function req({ post }) {
       <Header />
 
       <div className="px-4">
-      <div className="flex justify-between py-2">
+        <div className="flex justify-between py-2">
           <Link href="/international">
             <a className="px-6 py-3 duration-200 bg-blue-300 hover:bg-blue-500 rounded-xl">
               Назад
@@ -78,6 +78,7 @@ function req({ post }) {
             buttonText="Скачать Excel"
           />
         </div>
+
         <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
           <div className="inline-block min-w-full overflow-hidden rounded-lg shadow-md">
             <table className="min-w-full leading-normal" id="table-to-xls">
@@ -166,16 +167,15 @@ function req({ post }) {
           </div>
         </div>
       </div>
-      
     </>
   );
 }
 
-export default req;
+export default stu;
 
 export async function getServerSideProps({ params }) {
   const res = await fetch(
-    `https://arioapi.pythonanywhere.com/u-api/international/${params.id}`
+    `https://arioapi.pythonanywhere.com/u-api/student/${params.id}`
   );
   const post = await res.json();
 
