@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import Header from "./components/Header";
 import Link from "next/link";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
-import Pagination from "./components/Pagination";
 
-export default function Dashboard(data) {
+import AddPagaination from "./components/AddPagaination";
+export default function International(data) {
   const [user, setUser] = useState({
     email: "",
     username: "",
@@ -78,6 +78,8 @@ export default function Dashboard(data) {
   const [search, setSearch] = useState("");
   const [searchName, setSearchName] = useState("");
   const [sort, setSort] = useState(true);
+  const [paqe, setPaqe] = useState(2);
+
   return (
     <div className="mb-12">
       <Header />
@@ -108,10 +110,10 @@ export default function Dashboard(data) {
               onChange={(e) => setSearch(e.target.value)}
               className="p-2 bg-blue-100 rounded-md shadow-lg"
             >
-              <option value="man">Мужчина</option>
-              <option value="woman">Женщина</option>
+              <option value="linguaskill">linguaskill</option>
+              <option value="cert">cert</option>
               <option value="" selected>
-                Выберите пол
+                Выберить тест
               </option>
             </select>
           </div>
@@ -122,7 +124,7 @@ export default function Dashboard(data) {
           <div className="pt-3">
             <div className="flex justify-between">
               <h2 className="text-2xl font-semibold leading-tight">
-                Найдено 10 записей.
+                Количество заявок: {data.data.length}.
               </h2>
               <ReactHTMLTableToExcel
                 id="test-table-xls-button"
@@ -153,17 +155,17 @@ export default function Dashboard(data) {
                       .filter((item) => {
                         return search.toLowerCase() == ""
                           ? item
-                          : item.sex.toLowerCase().includes(search);
+                          : item.tests.toLowerCase().includes(search);
                       })
                       .filter((item) => {
                         return searchName.toLowerCase() == ""
                           ? item
-                          : item.sex.toLowerCase().includes(searchName);
+                          : item.fio.toLowerCase().includes(searchName);
                       })
                       .map((row) => {
                         return (
                           <tr key={row.id}>
-                            <td className="px-4 py-4 text-sm font-medium bg-white border-b border-gray-200">
+                            <td className="px-4 py-4 text-sm font-medium text-center bg-white border-b border-gray-200">
                               <Link href={`/req/${row.id}`}>
                                 <a className="p-1 duration-200 bg-blue-100 rounded-md hover:bg-blue-300">
                                   {(row.fio == "") | (row.fio == null)
@@ -179,10 +181,12 @@ export default function Dashboard(data) {
                               {row.iin}
                             </td>
                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                              {row.report_date}
+                              {row.report_date == null
+                                ? "-"
+                                : `${row.report_date}`}
                             </td>
                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                              {row.report_time == "default"
+                              {row.report_time == null
                                 ? "-"
                                 : `${row.report_time}`}
                             </td>
@@ -233,7 +237,7 @@ export default function Dashboard(data) {
                               </Link>
                             </td>
                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                              {row.sex}
+                              {row.sex == null ? "-" : `${row.sex}`}
                             </td>
                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                               {row.country}
@@ -248,14 +252,7 @@ export default function Dashboard(data) {
           </div>
         </div>
       </div>
-      <div className="flex justify-center">
-        <Pagination
-          totalPosts={data.data.length}
-          postsPerPage={postsPerPage}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-        />
-      </div>
+      <AddPagaination />
     </div>
   );
 }

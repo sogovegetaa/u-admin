@@ -11,7 +11,7 @@ function req({ post }) {
     },
     {
       id: 12,
-      title: "РЕГИОН",
+      title: "Регион",
     },
     {
       id: 13,
@@ -19,43 +19,43 @@ function req({ post }) {
     },
     {
       id: 14,
-      title: "ДАТА ЗАЯВКИ	",
+      title: "Дата сдачи	",
     },
     {
       id: 15,
-      title: "ВРЕМЯ СДАЧИ	",
+      title: "Время сдачи",
     },
     {
       id: 16,
-      title: "ПОЧТА",
+      title: "Почта",
     },
     {
       id: 17,
-      title: "ОФЕРТА",
+      title: "Оферта",
     },
     {
       id: 18,
-      title: "ТЕСТ",
+      title: "Заявка на:",
     },
     {
       id: 19,
-      title: "ТЕЛ.:",
+      title: "Тел.:",
     },
     {
       id: 20,
-      title: "УДОСТ.",
+      title: "УДВ",
     },
     {
       id: 23,
-      title: "ЧЕК ОПЛ.",
+      title: "Чек.",
     },
     {
       id: 21,
-      title: "ПОЛ",
+      title: "Пол",
     },
     {
       id: 22,
-      title: "ГРАЖДАНСТВО",
+      title: "Гражданство",
     },
   ];
   return (
@@ -160,13 +160,11 @@ function req({ post }) {
           sheet="tablexls"
           buttonText="Скачать Excel"
         />
-        <Link href="/dashboard">
+        <Link href="/international">
           <a className="px-6 py-3 duration-200 bg-blue-300 hover:bg-blue-500 rounded-xl">
             Назад
           </a>
         </Link>
-
-        
       </div>
     </>
   );
