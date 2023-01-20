@@ -130,7 +130,7 @@ function stu({ post }) {
                     {post.number}
                   </td>
                   <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                    <Link href={`${post.udostoverenie}`} target="_blank">
+                    <Link href={`https://arioapi.pythonanywhere.com/${post.udostoverenie}`} target="_blank">
                       <p
                         className={
                           post.udostoverenie == null
@@ -143,7 +143,7 @@ function stu({ post }) {
                     </Link>
                   </td>
                   <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                    <Link href={`${post.payment_check}`} target="_blank">
+                    <Link href={`https://arioapi.pythonanywhere.com/${post.payment_check}`} target="_blank">
                       <p
                         className={
                           post.payment_check == null

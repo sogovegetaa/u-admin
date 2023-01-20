@@ -13,8 +13,6 @@ export default function Home() {
     e.preventDefault();
     const res = await axios.post("/api/auth/login", credentials);
 
-    console.log(res);
-
     if (res.status === 200) {
       router.push("/dashboard") 
     } 
