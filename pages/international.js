@@ -5,7 +5,9 @@ import Header from "./components/Header";
 import Link from "next/link";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import AddPagaination from "./components/AddPagaination";
-
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import Tooltip from '@mui/material/Tooltip';
 export default function International(data) {
   const router = useRouter();
   const [user, setUser] = useState({
@@ -13,8 +15,10 @@ export default function International(data) {
     username: "",
   });
   const clickToDelete = (id) => {
-    axios.delete(`https://arioapi.pythonanywhere.com/u-api/international/${id}`)
-    
+    axios.delete(
+      `https://arioapi.pythonanywhere.com/u-api/international/${id}`
+    );
+
     // var requestOptions = {
     //   method: "DELETE",
     //   redirect: "follow",
@@ -200,36 +204,37 @@ export default function International(data) {
                       })
                       .map((row) => {
                         return (
-                          <tr key={row.id}>
-                            <td className="px-4 py-4 text-sm font-medium text-left bg-white border-b border-gray-200">
-                              <Link href={`/req/${row.id}`}>
-                                <a className="p-1 duration-200 bg-blue-100 rounded-md hover:bg-blue-300">
-                                  {(row.fio == "") | (row.fio == null)
-                                    ? "Не указан"
-                                    : `${row.fio}`}
-                                </a>
-                              </Link>
+                          <tr
+                            className="duration-200 hover:bg-gray-100"
+                            key={row.id}
+                          >
+                            <td className="px-4 py-4 text-sm font-medium text-left border-b">
+                              <a className="p-1 duration-200 rounded-md">
+                                {(row.fio == "") | (row.fio == null)
+                                  ? "Не указан"
+                                  : `${row.fio}`}
+                              </a>
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               {row.region}
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               {row.iin}
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               {row.report_date == null
                                 ? "-"
                                 : `${row.report_date}`}
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               {row.report_time == null
                                 ? "-"
                                 : `${row.report_time}`}
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               {row.email}
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               <span className="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
                                 <span
                                   aria-hidden
@@ -238,13 +243,13 @@ export default function International(data) {
                                 <span className="relative">Принять</span>
                               </span>
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               {row.tests == null ? "-" : `${row.tests}`}
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               {row.number}
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               <Link href={`${row.udostoverenie}`}>
                                 <a
                                   target="_blank"
@@ -258,7 +263,7 @@ export default function International(data) {
                                 </a>
                               </Link>
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               <Link href={`${row.payment_check}`}>
                                 <a
                                   target="_blank"
@@ -272,18 +277,18 @@ export default function International(data) {
                                 </a>
                               </Link>
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               {row.sex == null ? "-" : `${row.sex}`}
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
                               {row.country}
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                              <span
-                                onClick={() => clickToDelete(row.id)}
-                                className="flex justify-center px-2 py-1 font-medium text-center text-red-800 duration-200 bg-red-200 cursor-pointer rounded-xl hover:bg-red-300"
-                              >
-                                Удалить
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
+                              <span className="flex justify-between">
+                                <Link href={`/req/${row.id}`}>
+                               <Tooltip title="Открыть"><OpenInNewIcon className="text-blue-500 duration-200 cursor-pointer hover:scale-125" /></Tooltip>
+                                </Link>
+                                <Tooltip title="Удалить"><DeleteForeverIcon title="Delete" className="text-red-500 duration-200 cursor-pointer hover:scale-125" onClick={() => clickToDelete(row.id)} /></Tooltip>
                               </span>
                             </td>
                           </tr>
