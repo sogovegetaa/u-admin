@@ -176,6 +176,7 @@ export default stu;
 export async function getServerSideProps({ params }) {
   const res = await fetch(
     `https://arioapi.pythonanywhere.com/u-api/student/${params.id}`
+    
   );
   const post = await res.json();
 

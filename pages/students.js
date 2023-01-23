@@ -5,8 +5,11 @@ import Header from "./components/Header";
 import Link from "next/link";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import AddPagaination from "./components/AddPagaination";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import Tooltip from '@mui/material/Tooltip';
 export default function Students(data) {
-  const router = useRouter()
+  const router = useRouter();
   const [user, setUser] = useState({
     email: "",
     username: "",
@@ -269,12 +272,12 @@ export default function Students(data) {
                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                               {row.country}
                             </td>
-                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                              <span
-                                onClick={() => clickToDelete(row.id)}
-                                className="flex justify-center px-2 py-1 font-medium text-center text-red-800 duration-200 bg-red-200 cursor-pointer rounded-xl hover:bg-red-300"
-                              >
-                                Удалить
+                            <td className="px-5 py-5 text-sm border-b border-gray-200">
+                              <span className="flex justify-between">
+                                <Link href={`/stu/${row.id}`}>
+                               <Tooltip title="Открыть"><OpenInNewIcon className="text-blue-500 duration-200 cursor-pointer hover:scale-125" /></Tooltip>
+                                </Link>
+                                <Tooltip title="Удалить"><DeleteForeverIcon title="Delete" className="text-red-500 duration-200 cursor-pointer hover:scale-125" onClick={() => clickToDelete(row.id)} /></Tooltip>
                               </span>
                             </td>
                           </tr>
