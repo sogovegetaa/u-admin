@@ -5,12 +5,21 @@ import Header from "./components/Header";
 import Link from "next/link";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import AddPagaination from "./components/AddPagaination";
+
 export default function International(data) {
+  const router = useRouter();
   const [user, setUser] = useState({
     email: "",
     username: "",
   });
+  const clickToDelete = (id) => {
+    var requestOptions = {
+      method: "DELETE",
+      redirect: "follow",
+    };
 
+    fetch(`https://arioapi.pythonanywhere.com/u-api/international/${id}`,requestOptions).then((res) => router.reload());
+  };
   const getProfile = async () => {
     const profile = await axios.get("/api/profile");
     setUser(profile.data);
@@ -68,6 +77,10 @@ export default function International(data) {
       id: 22,
       title: "ГРАЖДАНСТВО",
     },
+    {
+      id: 23,
+      title: "Действие",
+    },
   ];
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
@@ -109,7 +122,9 @@ export default function International(data) {
               onChange={(e) => setSearch(e.target.value)}
               className="p-2 bg-blue-100 rounded-md shadow-lg"
             >
-              <option value="" selected>Все</option>
+              <option value="" selected>
+                Все
+              </option>
               <option value="cert">Сert</option>
               <option value="toeflitp">Toeflitp</option>
               <option value="тесты toefl primary">тесты Toefl Primary</option>
@@ -130,7 +145,7 @@ export default function International(data) {
                 Тест Toeic Listening and Reading Test
               </option>
               <option value="toeic speaking and writing test">
-              Toeic Speaking and Writing Test
+                Toeic Speaking and Writing Test
               </option>
               <option value="linguaskill">Linguaskill</option>
               <option value="tds">Tds</option>
@@ -159,9 +174,9 @@ export default function International(data) {
                 <table className="min-w-full leading-normal" id="table-to-xls">
                   <thead>
                     <tr>
-                      {col.map((col) => (
+                      {col.map((col, index) => (
                         <th
-                          key={col.id}
+                          key={index}
                           className="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase bg-gray-100 border-b-2 border-gray-200"
                         >
                           {col.title}
@@ -233,7 +248,7 @@ export default function International(data) {
                                   target="_blank"
                                   className={
                                     row.udostoverenie == null
-                                      ? "bg-red-200 text-center px-2 text-red-900 font-extrabold rounded-xl py-1 cursor-not-allowed flex justify-center"
+                                      ? "pointer-events-none	bg-red-200 text-center px-2 text-red-900 font-extrabold rounded-xl py-1 cursor-not-allowed flex justify-center"
                                       : "font-medium text-green-900 bg-green-200 px-2 rounded-xl py-1 cursor-pointer hover:bg-green-500 duration-200"
                                   }
                                 >
@@ -247,7 +262,7 @@ export default function International(data) {
                                   target="_blank"
                                   className={
                                     row.payment_check == null
-                                      ? "bg-red-200 text-center px-2 text-red-900 font-extrabold rounded-xl py-1 cursor-not-allowed flex justify-center"
+                                      ? "pointer-events-none	 bg-red-200 text-center px-2 text-red-900 font-extrabold rounded-xl py-1 cursor-not-allowed flex justify-center"
                                       : "font-medium text-green-900 bg-green-200 px-2 rounded-xl py-1 cursor-pointer hover:bg-green-500 duration-200"
                                   }
                                 >
@@ -260,6 +275,14 @@ export default function International(data) {
                             </td>
                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                               {row.country}
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              <span
+                                onClick={() => clickToDelete(row.id)}
+                                className="flex justify-center px-2 py-1 font-medium text-center text-red-800 duration-200 bg-red-200 cursor-pointer rounded-xl hover:bg-red-300"
+                              >
+                                Удалить
+                              </span>
                             </td>
                           </tr>
                         );
@@ -276,7 +299,9 @@ export default function International(data) {
   );
 }
 export async function getServerSideProps(context) {
-  const res = await fetch("https://arioapi.pythonanywhere.com/u-api/international/");
+  const res = await fetch(
+    "https://arioapi.pythonanywhere.com/u-api/international/"
+  );
   const data = await res.json();
   console.log(context);
   return {

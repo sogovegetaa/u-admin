@@ -6,11 +6,22 @@ import Link from "next/link";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import AddPagaination from "./components/AddPagaination";
 export default function Students(data) {
+  const router = useRouter()
   const [user, setUser] = useState({
     email: "",
     username: "",
   });
+  const clickToDelete = (id) => {
+    var requestOptions = {
+      method: "DELETE",
 
+      redirect: "follow",
+    };
+    fetch(
+      `https://arioapi.pythonanywhere.com/u-api/student/${id}`,
+      requestOptions
+    ).then((res) => router.reload());
+  };
   const getProfile = async () => {
     const profile = await axios.get("/api/profile");
     setUser(profile.data);
@@ -68,6 +79,10 @@ export default function Students(data) {
       id: 22,
       title: "ГРАЖДАНСТВО",
     },
+    {
+      id: 23,
+      title: "Действие",
+    },
   ];
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
@@ -124,12 +139,8 @@ export default function Students(data) {
                 Психологические тесты
               </option>
               <option value="нкт">НКТ</option>
-              <option value="магистратура">
-                Магистратура
-              </option>
-              <option value="тесты для вузов">
-                Тесты для вузов
-              </option>
+              <option value="магистратура">Магистратура</option>
+              <option value="тесты для вузов">Тесты для вузов</option>
               <option value="ulaywer">Ulaywer</option>
             </select>
           </div>
@@ -156,9 +167,9 @@ export default function Students(data) {
                 <table className="min-w-full leading-normal" id="table-to-xls">
                   <thead>
                     <tr>
-                      {col.map((col) => (
+                      {col.map((col, index) => (
                         <th
-                          key={col.id}
+                          key={index}
                           className="px-5 py-3 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase bg-gray-100 border-b-2 border-gray-200"
                         >
                           {col.title}
@@ -257,6 +268,14 @@ export default function Students(data) {
                             </td>
                             <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                               {row.country}
+                            </td>
+                            <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                              <span
+                                onClick={() => clickToDelete(row.id)}
+                                className="flex justify-center px-2 py-1 font-medium text-center text-red-800 duration-200 bg-red-200 cursor-pointer rounded-xl hover:bg-red-300"
+                              >
+                                Удалить
+                              </span>
                             </td>
                           </tr>
                         );
