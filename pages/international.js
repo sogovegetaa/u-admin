@@ -13,8 +13,8 @@ export default function International(data) {
     username: "",
   });
   const clickToDelete = (id) => {
-    axios.delete('https://arioapi.pythonanywhere.com/u-api/international/${id}')
-    .then(() => this.setState({ status: 'Delete successful' }))
+    axios.delete(`https://arioapi.pythonanywhere.com/u-api/international/${id}`)
+    
     // var requestOptions = {
     //   method: "DELETE",
     //   redirect: "follow",
