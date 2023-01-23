@@ -41,11 +41,11 @@ export default function Students(data) {
     },
     {
       id: 14,
-      title: "ДАТА ЗАЯВКИ	",
+      title: "ДАТА ЗАЯВКИ",
     },
     {
       id: 15,
-      title: "ВРЕМЯ СДАЧИ	",
+      title: "ВРЕМЯ СДАЧИ",
     },
     {
       id: 16,
@@ -192,7 +192,7 @@ export default function Students(data) {
                       .map((row) => {
                         return (
                           <tr key={row.id}>
-                            <td className="px-4 py-4 text-sm font-medium text-center bg-white border-b border-gray-200">
+                            <td className="px-4 py-4 text-sm font-medium text-left bg-white border-b border-gray-200">
                               <Link href={`/stu/${row.id}`}>
                                 <a className="p-1 duration-200 bg-blue-100 rounded-md hover:bg-blue-300">
                                   {(row.fio == "") | (row.fio == null)

@@ -13,12 +13,14 @@ export default function International(data) {
     username: "",
   });
   const clickToDelete = (id) => {
-    var requestOptions = {
-      method: "DELETE",
-      redirect: "follow",
-    };
+    axios.delete('https://arioapi.pythonanywhere.com/u-api/international/${id}')
+    .then(() => this.setState({ status: 'Delete successful' }))
+    // var requestOptions = {
+    //   method: "DELETE",
+    //   redirect: "follow",
+    // };
 
-    fetch(`https://arioapi.pythonanywhere.com/u-api/international/${id}`,requestOptions).then((res) => router.reload());
+    // fetch(`https://arioapi.pythonanywhere.com/u-api/international/${id}`,requestOptions).then((res) => router.reload());
   };
   const getProfile = async () => {
     const profile = await axios.get("/api/profile");
@@ -39,11 +41,11 @@ export default function International(data) {
     },
     {
       id: 14,
-      title: "ДАТА ЗАЯВКИ	",
+      title: "ДАТА ЗАЯВКИ",
     },
     {
       id: 15,
-      title: "ВРЕМЯ СДАЧИ	",
+      title: "ВРЕМЯ СДАЧИ",
     },
     {
       id: 16,
@@ -199,7 +201,7 @@ export default function International(data) {
                       .map((row) => {
                         return (
                           <tr key={row.id}>
-                            <td className="px-4 py-4 text-sm font-medium text-center bg-white border-b border-gray-200">
+                            <td className="px-4 py-4 text-sm font-medium text-left bg-white border-b border-gray-200">
                               <Link href={`/req/${row.id}`}>
                                 <a className="p-1 duration-200 bg-blue-100 rounded-md hover:bg-blue-300">
                                   {(row.fio == "") | (row.fio == null)
